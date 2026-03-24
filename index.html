@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>おでんスタンド - Instagram リール素材</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+      background: #1a1a1a;
+      color: #f5f0e8;
+    }
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #2d1810, #4a2c1a, #2d1810);
+      border-bottom: 3px solid #c8956c;
+    }
+    header h1 {
+      font-size: 2rem;
+      letter-spacing: 0.15em;
+      color: #f5deb3;
+      margin-bottom: 8px;
+    }
+    header p {
+      font-size: 0.9rem;
+      color: #c8956c;
+    }
+    .upload-zone {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+    .upload-zone h2 {
+      font-size: 1.2rem;
+      color: #c8956c;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #333;
+    }
+    .droparea {
+      border: 2px dashed #555;
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.3s, background 0.3s;
+      margin-bottom: 20px;
+    }
+    .droparea:hover, .droparea.dragover {
+      border-color: #c8956c;
+      background: rgba(200, 149, 108, 0.08);
+    }
+    .droparea p { color: #888; margin-bottom: 12px; }
+    .droparea .btn {
+      display: inline-block;
+      padding: 10px 28px;
+      background: #c8956c;
+      color: #1a1a1a;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .droparea .btn:hover { background: #d4a574; }
+    input[type="file"] { display: none; }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .gallery-item {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      aspect-ratio: 9 / 16;
+      background: #222;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .gallery-item .label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 8px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      font-size: 0.75rem;
+      color: #f5deb3;
+    }
+    .gallery-item .remove {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 24px;
+      height: 24px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 24px;
+    }
+
+    .reel-plan {
+      max-width: 800px;
+      margin: 0 auto 40px;
+      padding: 20px;
+    }
+    .reel-plan h2 {
+      font-size: 1.2rem;
+      color: #c8956c;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #333;
+    }
+    .scene {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding: 16px;
+      background: #222;
+      border-radius: 10px;
+      border-left: 4px solid #c8956c;
+    }
+    .scene-num {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      background: #c8956c;
+      color: #1a1a1a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    .scene-body h3 {
+      font-size: 1rem;
+      color: #f5deb3;
+      margin-bottom: 6px;
+    }
+    .scene-body p {
+      font-size: 0.85rem;
+      color: #aaa;
+      line-height: 1.6;
+    }
+    .scene-body .tag {
+      display: inline-block;
+      margin-top: 6px;
+      margin-right: 6px;
+      padding: 2px 10px;
+      background: #333;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: #c8956c;
+    }
+
+    .caption-box {
+      max-width: 800px;
+      margin: 0 auto 40px;
+      padding: 20px;
+    }
+    .caption-box h2 {
+      font-size: 1.2rem;
+      color: #c8956c;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #333;
+    }
+    .caption-content {
+      background: #222;
+      border-radius: 10px;
+      padding: 20px;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: #ddd;
+      white-space: pre-line;
+    }
+    .caption-content .hashtags {
+      margin-top: 12px;
+      color: #6b9bd2;
+      word-break: break-all;
+    }
+    .copy-btn {
+      margin-top: 12px;
+      padding: 8px 20px;
+      background: #c8956c;
+      color: #1a1a1a;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .copy-btn:hover { background: #d4a574; }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #555;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>おでんスタンド</h1>
+  <p>Instagram リール素材管理</p>
+</header>
+
+<!-- 画像アップロードエリア -->
+<section class="upload-zone">
+  <h2>素材画像をアップロード</h2>
+  <div class="droparea" id="droparea">
+    <p>ここに画像をドラッグ＆ドロップ<br>または</p>
+    <button class="btn" onclick="document.getElementById('fileInput').click()">ファイルを選択</button>
+    <input type="file" id="fileInput" multiple accept="image/*,video/*">
+  </div>
+  <div class="gallery" id="gallery"></div>
+</section>
+
+<!-- リール構成台本 -->
+<section class="reel-plan">
+  <h2>リール動画 構成台本（15-30秒）</h2>
+
+  <div class="scene">
+    <div class="scene-num">1</div>
+    <div class="scene-body">
+      <h3>フック（0-2秒）</h3>
+      <p>湯気が立ちのぼるおでん鍋のクローズアップ。手持ちカメラで少し揺らす。<br>
+      テロップ：「今日も関東煮、炊いてます。」</p>
+      <div class="tag">手ブレ感</div>
+      <div class="tag">湯気演出</div>
+      <div class="tag">自然光</div>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="scene-num">2</div>
+    <div class="scene-body">
+      <h3>具材アップ（2-6秒）</h3>
+      <p>大根・たまご・すじ肉をひとつずつ箸で持ち上げる。出汁が滴る瞬間をスロー再生。<br>
+      BGM：三味線の軽いリフ or 環境音（鍋のぐつぐつ）</p>
+      <div class="tag">スロー再生</div>
+      <div class="tag">環境音</div>
+      <div class="tag">ASMR要素</div>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="scene-num">3</div>
+    <div class="scene-body">
+      <h3>仕込みの裏側（6-12秒）</h3>
+      <p>朝の仕込みシーン。昆布を鍋に入れる、大根を面取りする、下茹でする手元。<br>
+      テロップ：「朝5時。誰もいない厨房から。」</p>
+      <div class="tag">裏側公開</div>
+      <div class="tag">ストーリー性</div>
+      <div class="tag">日常感</div>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="scene-num">4</div>
+    <div class="scene-body">
+      <h3>お客さんの反応（12-18秒）</h3>
+      <p>カウンター越しに「おいしい」とリアクションするお客さん（許可取得済み前提）。<br>
+      または手元だけ映して食べるシーンを撮影。</p>
+      <div class="tag">UGC風</div>
+      <div class="tag">リアル感</div>
+      <div class="tag">共感</div>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="scene-num">5</div>
+    <div class="scene-body">
+      <h3>CTA（18-22秒）</h3>
+      <p>店の外観をワイドで映す。提灯 or 暖簾が風に揺れる。<br>
+      テロップ：「寒い日は、ここにおいで。」<br>
+      最後にロゴ or 店名フェードイン。</p>
+      <div class="tag">CTA</div>
+      <div class="tag">余韻</div>
+      <div class="tag">位置情報タグ</div>
+    </div>
+  </div>
+</section>
+
+<!-- 投稿キャプション -->
+<section class="caption-box">
+  <h2>投稿キャプション</h2>
+  <div class="caption-content" id="captionText">寒い日にふと恋しくなる味、ありませんか。
+
+うちのおでんは、朝5時から出汁を引いて
+じっくり、ことこと。
+大根もたまごも、芯まで味がしゅんでます。
+
+カウンターに座って、
+湯気の向こうに「今日はどれにしよ」って
+迷う時間も、ごちそうです。
+
+今日も関東煮、炊いてます。
+ふらっと寄ってください。
+
+<span class="hashtags">#おでん #関東煮 #おでんスタンド #冬グルメ #大阪グルメ #居酒屋 #立ち飲み #出汁 #和食 #日本酒に合う #冬の楽しみ #グルメ好きな人と繋がりたい #食べスタグラム #飯テロ #japanesefood #oden #izakaya #foodstagram #instafood #osaka</span></div>
+  <button class="copy-btn" onclick="copyCaption()">キャプションをコピー</button>
+</section>
+
+<!-- アルゴリズム＆AI対策メモ -->
+<section class="reel-plan">
+  <h2>Instagram アルゴリズム対策</h2>
+
+  <div class="scene">
+    <div class="scene-num">A</div>
+    <div class="scene-body">
+      <h3>最初の2秒で惹きつける</h3>
+      <p>湯気のクローズアップで視覚的インパクト。スクロール停止率を上げるフック。<br>
+      冒頭にテキストを入れて「何の動画か」を即座に伝える。</p>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="scene-num">B</div>
+    <div class="scene-body">
+      <h3>完全視聴率を上げる構成</h3>
+      <p>15-22秒に収める（短いほど完全視聴されやすい）。<br>
+      シーン転換を3-4秒ごとに入れて飽きさせない。ループ再生を意識した構成。</p>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="scene-num">C</div>
+    <div class="scene-body">
+      <h3>エンゲージメント誘導</h3>
+      <p>「おでんの具、何が好き？」とコメント欄で質問。保存したくなる情報（仕込みの裏側）を入れる。<br>
+      位置情報タグ・関連アカウントのメンションを活用。</p>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="scene-num">D</div>
+    <div class="scene-body">
+      <h3>AI判定回避の工夫</h3>
+      <p>
+        ・手持ち撮影の自然な揺れを残す（三脚の完璧な固定を避ける）<br>
+        ・環境音（鍋の音、店内BGM、お客さんの声）を活かす<br>
+        ・テロップは手書き風フォントを使用し、毎回微妙にサイズ・位置を変える<br>
+        ・フィルターを統一しすぎない（投稿ごとに微妙に色味を変える）<br>
+        ・キャプションは話し言葉・方言混じりで、テンプレ感を消す<br>
+        ・ハッシュタグは大（100万+）・中（10万-100万）・小（1万以下）を混ぜる<br>
+        ・投稿時間を毎回少しずらす（完全に同じ時間に投稿しない）<br>
+        ・リール内にリアルタイム要素を入れる（日付、天気、季節ネタ）
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>おでんスタンド Instagram リール制作管理</p>
+</footer>
+
+<script>
+  const droparea = document.getElementById('droparea');
+  const fileInput = document.getElementById('fileInput');
+  const gallery = document.getElementById('gallery');
+  let imageFiles = [];
+
+  ['dragenter', 'dragover'].forEach(evt => {
+    droparea.addEventListener(evt, e => {
+      e.preventDefault();
+      droparea.classList.add('dragover');
+    });
+  });
+  ['dragleave', 'drop'].forEach(evt => {
+    droparea.addEventListener(evt, e => {
+      e.preventDefault();
+      droparea.classList.remove('dragover');
+    });
+  });
+
+  droparea.addEventListener('drop', e => {
+    const files = [...e.dataTransfer.files];
+    handleFiles(files);
+  });
+
+  fileInput.addEventListener('change', e => {
+    const files = [...e.target.files];
+    handleFiles(files);
+  });
+
+  function handleFiles(files) {
+    files.forEach((file, i) => {
+      if (!file.type.startsWith('image/') && !file.type.startsWith('video/')) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        const idx = imageFiles.length;
+        imageFiles.push({ name: file.name, data: e.target.result, type: file.type });
+        addToGallery(idx, file.name, e.target.result, file.type);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function addToGallery(idx, name, data, type) {
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.id = 'item-' + idx;
+
+    if (type.startsWith('video/')) {
+      const video = document.createElement('video');
+      video.src = data;
+      video.muted = true;
+      video.loop = true;
+      video.addEventListener('mouseenter', () => video.play());
+      video.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
+      item.appendChild(video);
+    } else {
+      const img = document.createElement('img');
+      img.src = data;
+      img.alt = name;
+      item.appendChild(img);
+    }
+
+    const label = document.createElement('div');
+    label.className = 'label';
+    label.textContent = name;
+    item.appendChild(label);
+
+    const btn = document.createElement('button');
+    btn.className = 'remove';
+    btn.textContent = '\u00d7';
+    btn.onclick = () => {
+      item.remove();
+      imageFiles[idx] = null;
+    };
+    item.appendChild(btn);
+
+    gallery.appendChild(item);
+  }
+
+  function copyCaption() {
+    const el = document.getElementById('captionText');
+    const text = el.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.querySelector('.copy-btn');
+      btn.textContent = 'コピーしました';
+      setTimeout(() => { btn.textContent = 'キャプションをコピー'; }, 2000);
+    });
+  }
+</script>
+
+</body>
+</html>
