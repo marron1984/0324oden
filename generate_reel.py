@@ -162,8 +162,8 @@ def render_scene1(frame_num, total_frames=90):
 
     # 上部に小さいテキスト
     if frame_num >= 5:
-        small_font = load_font(28)
-        draw_centered_text(draw, 80, "おでんスタンド", small_font,
+        small_font = load_font(42)
+        draw_centered_text(draw, 70, "おでんスタンド", small_font,
                            fill=(212, 162, 78))
 
     return img
@@ -414,7 +414,7 @@ def render_scene5(frame_num, total_frames=150):
         g = int(170 * alpha)
 
         y = 1500
-        draw_centered_text(draw, y, "おでんスタンド", load_font(34, bold=True),
+        draw_centered_text(draw, y, "おでんスタンド", load_font(51, bold=True),
                            fill=(int(212 * alpha), int(162 * alpha), int(78 * alpha)))
         draw_centered_text(draw, y + 50, "梅田 EST FOODHALL", info_font,
                            fill=(c, c, c))
@@ -422,8 +422,8 @@ def render_scene5(frame_num, total_frames=150):
                            fill=(g, g, g))
 
     # Top: おでんスタンド logo text
-    top_font = load_font(30)
-    draw_centered_text(draw, 80, "おでんスタンド", top_font,
+    top_font = load_font(45)
+    draw_centered_text(draw, 70, "おでんスタンド", top_font,
                        fill=(212, 162, 78))
 
     return img
