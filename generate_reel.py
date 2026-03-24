@@ -472,23 +472,50 @@ print("Frames done. Encoding video with ffmpeg...")
 
 # Encode with ffmpeg
 output_path = os.path.join(BASE, "reel_drink_push.mp4")
-cmd = [
-    "ffmpeg", "-y",
-    "-framerate", str(FPS),
-    "-i", os.path.join(frame_dir, "frame_%05d.jpg"),
-    "-c:v", "libx264",
-    "-preset", "slow",
-    "-crf", "18",
-    "-pix_fmt", "yuv420p",
-    "-vf", "scale=1080:1920",
-    "-movflags", "+faststart",
-    output_path
-]
+bgm_path = os.path.join(BASE, "Neon_City_Serenade.mp3")
+has_bgm = os.path.exists(bgm_path)
+
+if has_bgm:
+    # Video + BGM: fade in 1s, fade out 2s, trim to video length
+    duration = TOTAL_FRAMES / FPS
+    cmd = [
+        "ffmpeg", "-y",
+        "-framerate", str(FPS),
+        "-i", os.path.join(frame_dir, "frame_%05d.jpg"),
+        "-i", bgm_path,
+        "-c:v", "libx264",
+        "-preset", "slow",
+        "-crf", "18",
+        "-pix_fmt", "yuv420p",
+        "-vf", "scale=1080:1920",
+        "-af", f"afade=t=in:st=0:d=1,afade=t=out:st={duration - 2}:d=2",
+        "-shortest",
+        "-movflags", "+faststart",
+        output_path
+    ]
+    print(f"Adding BGM: {bgm_path} (fade in 1s, fade out 2s)")
+else:
+    cmd = [
+        "ffmpeg", "-y",
+        "-framerate", str(FPS),
+        "-i", os.path.join(frame_dir, "frame_%05d.jpg"),
+        "-c:v", "libx264",
+        "-preset", "slow",
+        "-crf", "18",
+        "-pix_fmt", "yuv420p",
+        "-vf", "scale=1080:1920",
+        "-movflags", "+faststart",
+        output_path
+    ]
+    print("Warning: BGM file not found, encoding video without audio.")
+
 result = subprocess.run(cmd, capture_output=True, text=True)
 if result.returncode == 0:
     size_mb = os.path.getsize(output_path) / (1024 * 1024)
     print(f"\nDone! Video saved to: {output_path}")
     print(f"Size: {size_mb:.1f} MB")
     print(f"Duration: {TOTAL_FRAMES/FPS:.1f}s | Resolution: {W}x{H} | FPS: {FPS}")
+    if has_bgm:
+        print("BGM: Neon_City_Serenade.mp3 ✓")
 else:
     print("ffmpeg error:", result.stderr[-500:])
