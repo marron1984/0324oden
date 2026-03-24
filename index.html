@@ -3,211 +3,278 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>おでんスタンド - Instagram リール素材</title>
+  <title>おでんスタンド - Instagram リール「ドリンク推し」</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
-      background: #1a1a1a;
+      background: #111;
       color: #f5f0e8;
+      line-height: 1.7;
     }
+
+    /* ===== Header ===== */
     header {
       text-align: center;
-      padding: 40px 20px;
-      background: linear-gradient(135deg, #2d1810, #4a2c1a, #2d1810);
-      border-bottom: 3px solid #c8956c;
+      padding: 48px 20px 36px;
+      background: linear-gradient(135deg, #1a0f08, #3d2010, #1a0f08);
+      border-bottom: 3px solid #d4a24e;
     }
     header h1 {
-      font-size: 2rem;
-      letter-spacing: 0.15em;
+      font-size: 1.8rem;
+      letter-spacing: 0.2em;
       color: #f5deb3;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
-    header p {
-      font-size: 0.9rem;
-      color: #c8956c;
+    header .sub {
+      font-size: 1.05rem;
+      color: #d4a24e;
+      letter-spacing: 0.1em;
     }
-    .upload-zone {
-      max-width: 800px;
-      margin: 30px auto;
-      padding: 20px;
-    }
-    .upload-zone h2 {
-      font-size: 1.2rem;
-      color: #c8956c;
-      margin-bottom: 16px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid #333;
-    }
-    .droparea {
-      border: 2px dashed #555;
-      border-radius: 12px;
-      padding: 40px;
-      text-align: center;
-      cursor: pointer;
-      transition: border-color 0.3s, background 0.3s;
-      margin-bottom: 20px;
-    }
-    .droparea:hover, .droparea.dragover {
-      border-color: #c8956c;
-      background: rgba(200, 149, 108, 0.08);
-    }
-    .droparea p { color: #888; margin-bottom: 12px; }
-    .droparea .btn {
+    header .concept {
       display: inline-block;
-      padding: 10px 28px;
-      background: #c8956c;
-      color: #1a1a1a;
-      border: none;
-      border-radius: 6px;
-      font-size: 0.95rem;
-      font-weight: bold;
-      cursor: pointer;
+      margin-top: 14px;
+      padding: 6px 24px;
+      border: 1px solid #d4a24e;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      color: #d4a24e;
     }
-    .droparea .btn:hover { background: #d4a574; }
-    input[type="file"] { display: none; }
 
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 12px;
-      margin-top: 16px;
+    /* ===== Section common ===== */
+    .section {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 36px 20px;
     }
-    .gallery-item {
+    .section h2 {
+      font-size: 1.25rem;
+      color: #d4a24e;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #2a2a2a;
+      letter-spacing: 0.08em;
+    }
+
+    /* ===== Photo Gallery ===== */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+    }
+    .photo-grid .photo {
       position: relative;
-      border-radius: 8px;
+      border-radius: 10px;
       overflow: hidden;
       aspect-ratio: 9 / 16;
-      background: #222;
+      background: #1a1a1a;
+      cursor: pointer;
+      transition: transform 0.25s;
     }
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .photo-grid .photo.landscape { aspect-ratio: 16 / 10; }
+    .photo-grid .photo:hover { transform: scale(1.02); }
+    .photo-grid .photo img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block;
     }
-    .gallery-item .label {
+    .photo-grid .photo .badge {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 8px;
-      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      top: 8px;
+      left: 8px;
+      padding: 3px 10px;
+      background: rgba(212, 162, 78, 0.9);
+      color: #111;
+      font-size: 0.7rem;
+      font-weight: bold;
+      border-radius: 20px;
+    }
+    .photo-grid .photo .caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 24px 10px 10px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.85));
       font-size: 0.75rem;
       color: #f5deb3;
     }
-    .gallery-item .remove {
-      position: absolute;
-      top: 6px;
-      right: 6px;
-      width: 24px;
-      height: 24px;
-      background: rgba(0,0,0,0.6);
-      color: #fff;
-      border: none;
-      border-radius: 50%;
+
+    /* ===== Lightbox ===== */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
-      font-size: 14px;
-      line-height: 24px;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 8px;
     }
 
-    .reel-plan {
-      max-width: 800px;
-      margin: 0 auto 40px;
-      padding: 20px;
-    }
-    .reel-plan h2 {
-      font-size: 1.2rem;
-      color: #c8956c;
-      margin-bottom: 16px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid #333;
+    /* ===== Storyboard ===== */
+    .storyboard {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
     }
     .scene {
       display: flex;
       gap: 16px;
-      margin-bottom: 20px;
-      padding: 16px;
-      background: #222;
-      border-radius: 10px;
-      border-left: 4px solid #c8956c;
+      padding: 18px;
+      background: #1a1a1a;
+      border-radius: 12px;
+      border-left: 4px solid #d4a24e;
     }
-    .scene-num {
+    .scene .thumb {
       flex-shrink: 0;
-      width: 40px;
-      height: 40px;
-      background: #c8956c;
-      color: #1a1a1a;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 1.1rem;
+      width: 90px;
+      height: 120px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #222;
     }
-    .scene-body h3 {
+    .scene .thumb img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .scene-info { flex: 1; }
+    .scene-info .time {
+      display: inline-block;
+      padding: 2px 10px;
+      background: #d4a24e;
+      color: #111;
+      font-size: 0.7rem;
+      font-weight: bold;
+      border-radius: 20px;
+      margin-bottom: 6px;
+    }
+    .scene-info h3 {
       font-size: 1rem;
+      color: #f5deb3;
+      margin-bottom: 4px;
+    }
+    .scene-info p {
+      font-size: 0.85rem;
+      color: #999;
+    }
+    .scene-info .tags {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .scene-info .tags span {
+      padding: 2px 10px;
+      background: #252525;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      color: #d4a24e;
+    }
+
+    /* ===== Caption Box ===== */
+    .caption-card {
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 24px;
+      font-size: 0.9rem;
+      color: #ccc;
+      white-space: pre-line;
+      position: relative;
+    }
+    .caption-card .hashtags {
+      margin-top: 16px;
+      color: #5b9fd6;
+      word-break: break-all;
+      line-height: 2;
+    }
+    .copy-btn {
+      margin-top: 14px;
+      padding: 10px 24px;
+      background: #d4a24e;
+      color: #111;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+    .copy-btn:hover { background: #e0b65e; }
+
+    /* ===== Tips card ===== */
+    .tip-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 14px;
+    }
+    .tip {
+      padding: 18px;
+      background: #1a1a1a;
+      border-radius: 12px;
+      border-left: 4px solid #d4a24e;
+    }
+    .tip h3 {
+      font-size: 0.95rem;
       color: #f5deb3;
       margin-bottom: 6px;
     }
-    .scene-body p {
-      font-size: 0.85rem;
-      color: #aaa;
-      line-height: 1.6;
-    }
-    .scene-body .tag {
-      display: inline-block;
-      margin-top: 6px;
-      margin-right: 6px;
-      padding: 2px 10px;
-      background: #333;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      color: #c8956c;
+    .tip p {
+      font-size: 0.82rem;
+      color: #999;
+      line-height: 1.7;
     }
 
-    .caption-box {
-      max-width: 800px;
-      margin: 0 auto 40px;
-      padding: 20px;
+    /* ===== Shop Info ===== */
+    .shop-info {
+      background: linear-gradient(135deg, #1e1408, #2d1a0a);
+      border: 1px solid #3d2a14;
+      border-radius: 14px;
+      padding: 30px;
     }
-    .caption-box h2 {
-      font-size: 1.2rem;
-      color: #c8956c;
+    .shop-info h3 {
+      font-size: 1.3rem;
+      color: #f5deb3;
       margin-bottom: 16px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid #333;
+      text-align: center;
+      letter-spacing: 0.15em;
     }
-    .caption-content {
-      background: #222;
-      border-radius: 10px;
-      padding: 20px;
-      font-size: 0.9rem;
-      line-height: 1.8;
-      color: #ddd;
-      white-space: pre-line;
+    .shop-info table {
+      width: 100%;
+      border-collapse: collapse;
     }
-    .caption-content .hashtags {
-      margin-top: 12px;
-      color: #6b9bd2;
-      word-break: break-all;
+    .shop-info table th {
+      text-align: left;
+      padding: 10px 16px 10px 0;
+      font-size: 0.85rem;
+      color: #d4a24e;
+      white-space: nowrap;
+      vertical-align: top;
+      width: 100px;
     }
-    .copy-btn {
-      margin-top: 12px;
-      padding: 8px 20px;
-      background: #c8956c;
-      color: #1a1a1a;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
+    .shop-info table td {
+      padding: 10px 0;
+      font-size: 0.85rem;
+      color: #ccc;
+      border-bottom: 1px solid #2a2014;
     }
-    .copy-btn:hover { background: #d4a574; }
 
+    /* ===== Footer ===== */
     footer {
       text-align: center;
       padding: 30px;
-      color: #555;
-      font-size: 0.8rem;
+      color: #444;
+      font-size: 0.78rem;
+    }
+
+    @media (max-width: 600px) {
+      .photo-grid { grid-template-columns: repeat(2, 1fr); }
+      .scene { flex-direction: column; }
+      .scene .thumb { width: 100%; height: 160px; }
+      .tip-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -215,238 +282,339 @@
 
 <header>
   <h1>おでんスタンド</h1>
-  <p>Instagram リール素材管理</p>
+  <div class="sub">Instagram Reel</div>
+  <div class="concept">コンセプト：ドリンク推し</div>
 </header>
 
-<!-- 画像アップロードエリア -->
-<section class="upload-zone">
-  <h2>素材画像をアップロード</h2>
-  <div class="droparea" id="droparea">
-    <p>ここに画像をドラッグ＆ドロップ<br>または</p>
-    <button class="btn" onclick="document.getElementById('fileInput').click()">ファイルを選択</button>
-    <input type="file" id="fileInput" multiple accept="image/*,video/*">
-  </div>
-  <div class="gallery" id="gallery"></div>
-</section>
-
-<!-- リール構成台本 -->
-<section class="reel-plan">
-  <h2>リール動画 構成台本（15-30秒）</h2>
-
-  <div class="scene">
-    <div class="scene-num">1</div>
-    <div class="scene-body">
-      <h3>フック（0-2秒）</h3>
-      <p>湯気が立ちのぼるおでん鍋のクローズアップ。手持ちカメラで少し揺らす。<br>
-      テロップ：「今日も関東煮、炊いてます。」</p>
-      <div class="tag">手ブレ感</div>
-      <div class="tag">湯気演出</div>
-      <div class="tag">自然光</div>
+<!-- ===== 素材一覧 ===== -->
+<section class="section">
+  <h2>素材写真一覧</h2>
+  <div class="photo-grid">
+    <div class="photo" onclick="openLightbox(this)">
+      <img src="ドリンク_フルーツサワー0003.jpg" alt="フルーツサワー3種">
+      <div class="badge">MAIN</div>
+      <div class="caption">フルーツサワー 3種（キウイ・巨峰・マンゴー）</div>
     </div>
-  </div>
-
-  <div class="scene">
-    <div class="scene-num">2</div>
-    <div class="scene-body">
-      <h3>具材アップ（2-6秒）</h3>
-      <p>大根・たまご・すじ肉をひとつずつ箸で持ち上げる。出汁が滴る瞬間をスロー再生。<br>
-      BGM：三味線の軽いリフ or 環境音（鍋のぐつぐつ）</p>
-      <div class="tag">スロー再生</div>
-      <div class="tag">環境音</div>
-      <div class="tag">ASMR要素</div>
+    <div class="photo" onclick="openLightbox(this)">
+      <img src="gp_58.JPG" alt="フルーツサワー5種並び">
+      <div class="badge">Scene 2</div>
+      <div class="caption">フルーツサワー 5色並び（正面）</div>
     </div>
-  </div>
-
-  <div class="scene">
-    <div class="scene-num">3</div>
-    <div class="scene-body">
-      <h3>仕込みの裏側（6-12秒）</h3>
-      <p>朝の仕込みシーン。昆布を鍋に入れる、大根を面取りする、下茹でする手元。<br>
-      テロップ：「朝5時。誰もいない厨房から。」</p>
-      <div class="tag">裏側公開</div>
-      <div class="tag">ストーリー性</div>
-      <div class="tag">日常感</div>
+    <div class="photo" onclick="openLightbox(this)">
+      <img src="gp_59.JPG" alt="フルーツサワー5種 別角度">
+      <div class="badge">Scene 2</div>
+      <div class="caption">フルーツサワー 5色並び（別角度）</div>
     </div>
-  </div>
-
-  <div class="scene">
-    <div class="scene-num">4</div>
-    <div class="scene-body">
-      <h3>お客さんの反応（12-18秒）</h3>
-      <p>カウンター越しに「おいしい」とリアクションするお客さん（許可取得済み前提）。<br>
-      または手元だけ映して食べるシーンを撮影。</p>
-      <div class="tag">UGC風</div>
-      <div class="tag">リアル感</div>
-      <div class="tag">共感</div>
+    <div class="photo" onclick="openLightbox(this)">
+      <img src="gp_60.JPG" alt="フルーツサワー5種 縦構図">
+      <div class="badge">Scene 2</div>
+      <div class="caption">フルーツサワー 5色並び（縦構図）</div>
     </div>
-  </div>
-
-  <div class="scene">
-    <div class="scene-num">5</div>
-    <div class="scene-body">
-      <h3>CTA（18-22秒）</h3>
-      <p>店の外観をワイドで映す。提灯 or 暖簾が風に揺れる。<br>
-      テロップ：「寒い日は、ここにおいで。」<br>
-      最後にロゴ or 店名フェードイン。</p>
-      <div class="tag">CTA</div>
-      <div class="tag">余韻</div>
-      <div class="tag">位置情報タグ</div>
+    <div class="photo" onclick="openLightbox(this)">
+      <img src="ドリンク_フルーツサワー0008.jpg" alt="乾杯カット">
+      <div class="badge">Scene 3</div>
+      <div class="caption">乾杯カット（キウイ&マンゴー）</div>
+    </div>
+    <div class="photo" onclick="openLightbox(this)">
+      <img src="ドリンク_日本酒_0002.jpg" alt="日本酒ラインナップ">
+      <div class="badge">Scene 4</div>
+      <div class="caption">日本酒 + 錫の酒器</div>
+    </div>
+    <div class="photo" onclick="openLightbox(this)">
+      <img src="ドリンク_日本酒_0005.jpg" alt="日本酒 縦構図">
+      <div class="badge">Scene 4</div>
+      <div class="caption">日本酒ボトル（縦構図）</div>
+    </div>
+    <div class="photo landscape" onclick="openLightbox(this)">
+      <img src="gp_43.JPG" alt="冷蔵ケースの日本酒">
+      <div class="badge">Scene 4</div>
+      <div class="caption">冷蔵ケースの日本酒ラインナップ</div>
+    </div>
+    <div class="photo landscape" onclick="openLightbox(this)">
+      <img src="gp_46.JPG" alt="カウンター日本酒">
+      <div class="badge">Scene 4</div>
+      <div class="caption">カウンター上の日本酒 + 酒器</div>
+    </div>
+    <div class="photo" onclick="openLightbox(this)">
+      <img src="gp_57.JPG" alt="ドリンク全種">
+      <div class="badge">Scene 5</div>
+      <div class="caption">ドリンク全種集合カット</div>
     </div>
   </div>
 </section>
 
-<!-- 投稿キャプション -->
-<section class="caption-box">
+<!-- ===== Lightbox ===== -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<!-- ===== リール構成台本 ===== -->
+<section class="section">
+  <h2>リール構成台本（18-25秒 / ドリンク推し）</h2>
+  <div class="storyboard">
+
+    <div class="scene">
+      <div class="thumb">
+        <img src="ドリンク_フルーツサワー0003.jpg" alt="">
+      </div>
+      <div class="scene-info">
+        <div class="time">0-3秒 / フック</div>
+        <h3>「おでん屋のドリンク、本気です。」</h3>
+        <p>
+          フルーツサワー3種のクローズアップからスタート。カメラはゆっくりスライドしながら、グラスの結露と色彩を捉える。<br>
+          テロップ（手書き風）：「え、おでん屋でこれ出てくるん？」<br>
+          音：氷がグラスに当たる「カランッ」の環境音。
+        </p>
+        <div class="tags">
+          <span>スクロール停止</span>
+          <span>色彩インパクト</span>
+          <span>疑問形フック</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene">
+      <div class="thumb">
+        <img src="gp_58.JPG" alt="">
+      </div>
+      <div class="scene-info">
+        <div class="time">3-8秒 / フルーツサワー紹介</div>
+        <h3>5色のフルーツサワーを一気見せ</h3>
+        <p>
+          5色並びのカットをテンポよく切り替え（正面→別角度→縦構図の3カット / 各1.5秒）。<br>
+          グラスに触れてフルーツが揺れる瞬間をスロー再生で挟む。<br>
+          テロップ：「メロン / パイン / キウイ / ミックスベリー / レモン」（1つずつポップイン）<br>
+          音：軽快なアコースティックギターのリフ + 炭酸のシュワシュワ音。
+        </p>
+        <div class="tags">
+          <span>カット切替</span>
+          <span>スロー挿入</span>
+          <span>ASMR</span>
+          <span>テンポ感</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene">
+      <div class="thumb">
+        <img src="ドリンク_フルーツサワー0008.jpg" alt="">
+      </div>
+      <div class="scene-info">
+        <div class="time">8-11秒 / 乾杯シーン</div>
+        <h3>「かんぱ〜い！」のリアル感</h3>
+        <p>
+          キウイサワーとマンゴーサワーの乾杯カット。手元のリアルな動きで「友達と来た感」を演出。<br>
+          テロップ：「推しはどれ？」（コメント誘導）<br>
+          音：グラスがぶつかる「チンッ」+ 店内のざわつき。
+        </p>
+        <div class="tags">
+          <span>UGC風</span>
+          <span>コメント誘導</span>
+          <span>リアル感</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene">
+      <div class="thumb">
+        <img src="ドリンク_日本酒_0002.jpg" alt="">
+      </div>
+      <div class="scene-info">
+        <div class="time">11-17秒 / 日本酒パート</div>
+        <h3>「実は、日本酒も揃ってます。」</h3>
+        <p>
+          トーンを一気に変える。暖色の照明下で日本酒ボトルと錫の酒器をゆっくりパン。冷蔵ケースのカットを挟む。<br>
+          テロップ：「篠峯 / ばくれん / 鳳凰美田 / 初しぼり...」（筆文字風フォント）<br>
+          音：BGMをフェードアウトし、徳利から注ぐ「トクトク」音に切り替え。
+        </p>
+        <div class="tags">
+          <span>トーン転換</span>
+          <span>ギャップ演出</span>
+          <span>ASMR</span>
+          <span>酒好き刺さり</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene">
+      <div class="thumb">
+        <img src="gp_57.JPG" alt="">
+      </div>
+      <div class="scene-info">
+        <div class="time">17-21秒 / 全種集合 + CTA</div>
+        <h3>ドリンク全種の圧巻カット</h3>
+        <p>
+          フルーツサワー・日本酒・ビール・ハイボールが一堂に会する「全部並べ」カット。<br>
+          テロップ：「おでんに合う一杯、見つけにおいで。」<br>
+          ラスト1秒でロゴ or 店名をフェードイン + 位置情報ピンのアニメーション。<br>
+          音：BGM戻し → 余韻で終了。
+        </p>
+        <div class="tags">
+          <span>CTA</span>
+          <span>集合カット</span>
+          <span>位置情報タグ</span>
+          <span>ループ意識</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== キャプション ===== -->
+<section class="section">
   <h2>投稿キャプション</h2>
-  <div class="caption-content" id="captionText">寒い日にふと恋しくなる味、ありませんか。
+  <div class="caption-card" id="captionText">え、おでん屋でこれ出てくるん？って
+よく言われます。笑
 
-うちのおでんは、朝5時から出汁を引いて
-じっくり、ことこと。
-大根もたまごも、芯まで味がしゅんでます。
+フルーツサワーは全5種。
+メロン、パイン、キウイ、ミックスベリー、レモン。
+ゴロゴロ果実が関西スタイル。
 
-カウンターに座って、
-湯気の向こうに「今日はどれにしよ」って
-迷う時間も、ごちそうです。
+で、実は日本酒もかなり揃えてます。
+篠峯、ばくれん、鳳凰美田、初しぼり...
+おでんの出汁に合う銘柄、
+店主がこっそり厳選してるんで。
 
-今日も関東煮、炊いてます。
-ふらっと寄ってください。
+フルーツサワーでわいわいも良し、
+日本酒をちびちびやるも良し。
 
-<span class="hashtags">#おでん #関東煮 #おでんスタンド #冬グルメ #大阪グルメ #居酒屋 #立ち飲み #出汁 #和食 #日本酒に合う #冬の楽しみ #グルメ好きな人と繋がりたい #食べスタグラム #飯テロ #japanesefood #oden #izakaya #foodstagram #instafood #osaka</span></div>
+おでんに合う一杯、見つけにおいで。
+
+-------
+
+<span class="hashtags">#おでんスタンド #おでん #関東煮 #フルーツサワー #日本酒 #居酒屋ドリンク #大阪グルメ #大阪居酒屋 #立ち飲み #サワー #飲みスタグラム #グルメ好きな人と繋がりたい #食べスタグラム #飯テロ #日本酒好きな人と繋がりたい #果実サワー #カクテル #izakaya #japanesefood #fruitsour #sake #osaka #foodstagram #drinkstagram #instafood</span></div>
   <button class="copy-btn" onclick="copyCaption()">キャプションをコピー</button>
 </section>
 
-<!-- アルゴリズム＆AI対策メモ -->
-<section class="reel-plan">
-  <h2>Instagram アルゴリズム対策</h2>
+<!-- ===== アルゴリズム & AI対策 ===== -->
+<section class="section">
+  <h2>Instagram アルゴリズム対策 & AI判定回避</h2>
+  <div class="tip-grid">
 
-  <div class="scene">
-    <div class="scene-num">A</div>
-    <div class="scene-body">
-      <h3>最初の2秒で惹きつける</h3>
-      <p>湯気のクローズアップで視覚的インパクト。スクロール停止率を上げるフック。<br>
-      冒頭にテキストを入れて「何の動画か」を即座に伝える。</p>
-    </div>
-  </div>
-
-  <div class="scene">
-    <div class="scene-num">B</div>
-    <div class="scene-body">
-      <h3>完全視聴率を上げる構成</h3>
-      <p>15-22秒に収める（短いほど完全視聴されやすい）。<br>
-      シーン転換を3-4秒ごとに入れて飽きさせない。ループ再生を意識した構成。</p>
-    </div>
-  </div>
-
-  <div class="scene">
-    <div class="scene-num">C</div>
-    <div class="scene-body">
-      <h3>エンゲージメント誘導</h3>
-      <p>「おでんの具、何が好き？」とコメント欄で質問。保存したくなる情報（仕込みの裏側）を入れる。<br>
-      位置情報タグ・関連アカウントのメンションを活用。</p>
-    </div>
-  </div>
-
-  <div class="scene">
-    <div class="scene-num">D</div>
-    <div class="scene-body">
-      <h3>AI判定回避の工夫</h3>
+    <div class="tip">
+      <h3>冒頭2秒のフック設計</h3>
       <p>
-        ・手持ち撮影の自然な揺れを残す（三脚の完璧な固定を避ける）<br>
-        ・環境音（鍋の音、店内BGM、お客さんの声）を活かす<br>
-        ・テロップは手書き風フォントを使用し、毎回微妙にサイズ・位置を変える<br>
-        ・フィルターを統一しすぎない（投稿ごとに微妙に色味を変える）<br>
-        ・キャプションは話し言葉・方言混じりで、テンプレ感を消す<br>
-        ・ハッシュタグは大（100万+）・中（10万-100万）・小（1万以下）を混ぜる<br>
-        ・投稿時間を毎回少しずらす（完全に同じ時間に投稿しない）<br>
-        ・リール内にリアルタイム要素を入れる（日付、天気、季節ネタ）
+        フルーツサワーのカラフルさで視覚的にスクロールを止める。
+        疑問形テロップ（「え、おでん屋でこれ？」）で「続きが気になる」心理を刺激。
+        冒頭に文字を入れることで発見タブでの停止率UP。
       </p>
     </div>
+
+    <div class="tip">
+      <h3>完全視聴率を最大化</h3>
+      <p>
+        18-25秒に収め、完全視聴を狙う。
+        シーン転換を2-4秒ごとに入れて視覚的飽きを防止。
+        サワー→乾杯→日本酒のトーン転換で「意外性」を持たせ離脱を防ぐ。
+        ラストカットを冒頭と繋げてループ再生を意識。
+      </p>
+    </div>
+
+    <div class="tip">
+      <h3>エンゲージメント誘導</h3>
+      <p>
+        「推しはどれ？」でコメントを誘導（コメント数はアルゴリズムに強く影響）。
+        保存したくなるメニュー情報を含める。
+        位置情報タグ・関連アカウントのメンションで発見可能性を拡大。
+        投稿後30分以内にストーリーズでリールをシェア。
+      </p>
+    </div>
+
+    <div class="tip">
+      <h3>ハッシュタグ戦略</h3>
+      <p>
+        大（100万+）：#japanesefood #instafood #osaka<br>
+        中（10万〜100万）：#居酒屋 #日本酒 #大阪グルメ #foodstagram<br>
+        小（1万以下）：#おでんスタンド #果実サワー #飲みスタグラム<br>
+        合計20-25個。毎投稿で3-5個入れ替えてローテーション。
+      </p>
+    </div>
+
+    <div class="tip">
+      <h3>AI生成判定の回避（映像）</h3>
+      <p>
+        ・手持ち撮影の微ブレを残す（完璧なスタビライズは避ける）<br>
+        ・環境音を必ず残す（氷の音、店内BGM、お客さんの声のざわめき）<br>
+        ・テロップは手書き風フォント＋位置・サイズを毎回微妙にずらす<br>
+        ・色味/フィルターを投稿ごとに少し変える（統一しすぎない）<br>
+        ・カット間に0.5秒の「間」や不完全なトランジションを入れる<br>
+        ・手元や人の動きなど「自然な不規則性」を意図的に残す
+      </p>
+    </div>
+
+    <div class="tip">
+      <h3>AI生成判定の回避（テキスト）</h3>
+      <p>
+        ・キャプションは話し言葉ベース、大阪弁を自然に混ぜる<br>
+        ・「笑」「w」「...」など口語的な表現を適度に使う<br>
+        ・毎投稿で文体のトーンを微妙に変える（テンプレ感を消す）<br>
+        ・投稿時間を毎回5-15分ずらす（botパターンを回避）<br>
+        ・リール内にリアルタイム要素を入れる（「今日の入荷」「本日の気温」等）<br>
+        ・個人的な感想や一言を添えて人間味を出す
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== 店舗情報 ===== -->
+<section class="section">
+  <div class="shop-info">
+    <h3>おでんスタンド</h3>
+    <table>
+      <tr>
+        <th>住所</th>
+        <td>大阪市中央区千日前1-9-1</td>
+      </tr>
+      <tr>
+        <th>最寄駅</th>
+        <td>なんば駅 徒歩3分 / 日本橋駅 徒歩3分</td>
+      </tr>
+      <tr>
+        <th>営業時間</th>
+        <td>16:00〜23:00（L.O. 22:30）</td>
+      </tr>
+      <tr>
+        <th>定休日</th>
+        <td>不定休</td>
+      </tr>
+      <tr>
+        <th>席数</th>
+        <td>カウンター席 / 立ち飲みスタイル</td>
+      </tr>
+      <tr>
+        <th>ドリンク</th>
+        <td>フルーツサワー全5種 / 日本酒（常時8種以上） / ビール / ハイボール</td>
+      </tr>
+      <tr>
+        <th>Instagram</th>
+        <td>@oden_stand（プロフィールリンクから予約可）</td>
+      </tr>
+    </table>
   </div>
 </section>
 
 <footer>
-  <p>おでんスタンド Instagram リール制作管理</p>
+  <p>おでんスタンド Instagram Reel 制作管理</p>
 </footer>
 
 <script>
-  const droparea = document.getElementById('droparea');
-  const fileInput = document.getElementById('fileInput');
-  const gallery = document.getElementById('gallery');
-  let imageFiles = [];
-
-  ['dragenter', 'dragover'].forEach(evt => {
-    droparea.addEventListener(evt, e => {
-      e.preventDefault();
-      droparea.classList.add('dragover');
-    });
-  });
-  ['dragleave', 'drop'].forEach(evt => {
-    droparea.addEventListener(evt, e => {
-      e.preventDefault();
-      droparea.classList.remove('dragover');
-    });
-  });
-
-  droparea.addEventListener('drop', e => {
-    const files = [...e.dataTransfer.files];
-    handleFiles(files);
-  });
-
-  fileInput.addEventListener('change', e => {
-    const files = [...e.target.files];
-    handleFiles(files);
-  });
-
-  function handleFiles(files) {
-    files.forEach((file, i) => {
-      if (!file.type.startsWith('image/') && !file.type.startsWith('video/')) return;
-      const reader = new FileReader();
-      reader.onload = e => {
-        const idx = imageFiles.length;
-        imageFiles.push({ name: file.name, data: e.target.result, type: file.type });
-        addToGallery(idx, file.name, e.target.result, file.type);
-      };
-      reader.readAsDataURL(file);
-    });
+  /* Lightbox */
+  function openLightbox(el) {
+    const src = el.querySelector('img').src;
+    const lb = document.getElementById('lightbox');
+    document.getElementById('lightboxImg').src = src;
+    lb.classList.add('active');
   }
-
-  function addToGallery(idx, name, data, type) {
-    const item = document.createElement('div');
-    item.className = 'gallery-item';
-    item.id = 'item-' + idx;
-
-    if (type.startsWith('video/')) {
-      const video = document.createElement('video');
-      video.src = data;
-      video.muted = true;
-      video.loop = true;
-      video.addEventListener('mouseenter', () => video.play());
-      video.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
-      item.appendChild(video);
-    } else {
-      const img = document.createElement('img');
-      img.src = data;
-      img.alt = name;
-      item.appendChild(img);
-    }
-
-    const label = document.createElement('div');
-    label.className = 'label';
-    label.textContent = name;
-    item.appendChild(label);
-
-    const btn = document.createElement('button');
-    btn.className = 'remove';
-    btn.textContent = '\u00d7';
-    btn.onclick = () => {
-      item.remove();
-      imageFiles[idx] = null;
-    };
-    item.appendChild(btn);
-
-    gallery.appendChild(item);
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
   }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
 
+  /* Copy caption */
   function copyCaption() {
     const el = document.getElementById('captionText');
     const text = el.innerText;
