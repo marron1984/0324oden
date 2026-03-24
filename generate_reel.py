@@ -296,15 +296,16 @@ def render_scene3(frame_num, total_frames=90):
 
 
 # ============================================================
-# SCENE 4: 日本酒 (11-17s = frames 330-509)
+# SCENE 4: 日本酒 (11-19s = frames 330-569)
 # 日本酒ボトル + 酒器 + 冷蔵ケース
-# 3カット: sake_0002 -> sake_0005 -> gp_43
+# 3カット: sake_0002 -> sake_0005 -> gp_43 (各80フレーム=2.67秒)
 # ============================================================
-def render_scene4(frame_num, total_frames=180):
+def render_scene4(frame_num, total_frames=240):
+    CUT_LEN = 80  # 各カット80フレーム (2.67秒)
     cuts = [
-        "ドリンク_日本酒_0002.jpg",   # 0-59
-        "ドリンク_日本酒_0005.jpg",   # 60-119
-        "gp_43.JPG",                   # 120-179
+        "ドリンク_日本酒_0002.jpg",   # 0-79
+        "ドリンク_日本酒_0005.jpg",   # 80-159
+        "gp_43.JPG",                   # 160-239
     ]
     labels = [
         "篠峯 / ばくれん / 鳳凰美田",
@@ -312,14 +313,14 @@ def render_scene4(frame_num, total_frames=180):
         "常時 8種以上ご用意",
     ]
 
-    cut_idx = min(frame_num // 60, 2)
-    cut_frame = frame_num % 60
+    cut_idx = min(frame_num // CUT_LEN, 2)
+    cut_frame = frame_num % CUT_LEN
 
     img = load_img(cuts[cut_idx])
-    progress = cut_frame / 60
+    progress = cut_frame / CUT_LEN
 
-    # Ken Burns
-    zoom = 1.05 + 0.05 * progress
+    # Ken Burns - ゆっくりズーム
+    zoom = 1.04 + 0.04 * progress
     zw, zh = int(W * zoom), int(H * zoom)
     img = fit_image(img, zw, zh)
 
@@ -345,18 +346,23 @@ def render_scene4(frame_num, total_frames=180):
     img = img.convert("RGB")
     draw = ImageDraw.Draw(img)
 
-    # Scene transition text at start
-    if frame_num < 30:
-        alpha = min(1.0, frame_num / 15) if frame_num < 15 else max(0, 1.0 - (frame_num - 15) / 15)
+    # Scene transition text - ゆっくりフェードイン→長めに表示→フェードアウト
+    if frame_num < 55:
+        if frame_num < 20:
+            alpha = min(1.0, frame_num / 20)
+        elif frame_num < 40:
+            alpha = 1.0
+        else:
+            alpha = max(0, 1.0 - (frame_num - 40) / 15)
         font = load_font(44, bold=True)
         c = int(255 * alpha)
         draw_centered_text(draw, H // 2 - 40, "実は、日本酒も", font, fill=(c, c, c))
         draw_centered_text(draw, H // 2 + 30, "揃ってます。", font, fill=(c, c, c))
 
-    # Label for current cut
-    if cut_frame >= 15:
-        alpha = min(1.0, (cut_frame - 15) / 15)
-        font = load_font(36, bold=True)
+    # Label for current cut - ゆっくりフェードイン（30フレーム後に表示開始）
+    if cut_frame >= 20:
+        alpha = min(1.0, (cut_frame - 20) / 25)
+        font = load_font(38, bold=True)
         c = int(255 * alpha)
         g = int(220 * alpha)
         b = int(180 * alpha)
@@ -371,7 +377,7 @@ def render_scene4(frame_num, total_frames=180):
 
 
 # ============================================================
-# SCENE 5: 全種集合 + CTA (17-22s = frames 510-659)
+# SCENE 5: 全種集合 + CTA (19-24s = frames 570-719)
 # ドリンク全種 + 店舗情報 + CTA
 # ============================================================
 def render_scene5(frame_num, total_frames=150):
@@ -410,9 +416,9 @@ def render_scene5(frame_num, total_frames=150):
         y = 1500
         draw_centered_text(draw, y, "おでんスタンド", load_font(34, bold=True),
                            fill=(int(212 * alpha), int(162 * alpha), int(78 * alpha)))
-        draw_centered_text(draw, y + 50, "心斎橋 / ホテル日航ビル B2F", info_font,
+        draw_centered_text(draw, y + 50, "梅田 EST FOODHALL", info_font,
                            fill=(c, c, c))
-        draw_centered_text(draw, y + 90, "ランチ 11:30〜  ディナー 17:00〜", small_font,
+        draw_centered_text(draw, y + 90, "11:00〜23:00（L.O. 22:30）", small_font,
                            fill=(g, g, g))
 
     # Top: おでんスタンド logo text
@@ -428,21 +434,26 @@ def render_scene5(frame_num, total_frames=150):
 # ============================================================
 def render_frame(global_frame):
     """Route to the correct scene renderer."""
+    # Scene1: 0-89 (3s)  フック
+    # Scene2: 90-239 (5s) フルーツサワー
+    # Scene3: 240-329 (3s) 乾杯
+    # Scene4: 330-569 (8s) 日本酒 ← 拡大: 各カット80f x 3 = 240f
+    # Scene5: 570-719 (5s) CTA + 店舗情報
     if global_frame < 90:
         return render_scene1(global_frame, 90)
     elif global_frame < 240:
         return render_scene2(global_frame - 90, 150)
     elif global_frame < 330:
         return render_scene3(global_frame - 240, 90)
-    elif global_frame < 510:
-        return render_scene4(global_frame - 330, 180)
-    elif global_frame < 660:
-        return render_scene5(global_frame - 510, 150)
+    elif global_frame < 570:
+        return render_scene4(global_frame - 330, 240)
+    elif global_frame < 720:
+        return render_scene5(global_frame - 570, 150)
     else:
         return render_scene5(149, 150)
 
 
-TOTAL_FRAMES = 660  # 22 seconds at 30fps
+TOTAL_FRAMES = 720  # 24 seconds at 30fps
 
 print(f"Rendering {TOTAL_FRAMES} frames ({TOTAL_FRAMES/FPS:.1f}s) at {W}x{H}...")
 
