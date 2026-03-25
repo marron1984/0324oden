@@ -206,40 +206,9 @@ def render_scene2(frame_num, total_frames=150):
     img = img.convert("RGB")
     draw = ImageDraw.Draw(img)
 
-    # Fruit name labels - pop in one by one
-    font = load_font(38, bold=True)
-    small_font = load_font(26)
-    colors = [
-        (50, 205, 50),    # ライム - lime green
-        (255, 165, 0),    # マンゴー - orange
-        (154, 205, 50),   # キウイ - yellow-green
-        (220, 60, 80),    # ミックスベリー - red
-        (255, 255, 200),  # レモン - light yellow
-    ]
-
-    # Show fruits progressively across the whole scene
-    global_frame = frame_num
-    y_pos = 1520
-    x_positions = [80, 270, 460, 600, 840]
-
-    for i, name in enumerate(fruits[cut_idx]):
-        appear_frame = 10 + i * 20  # Stagger appearance
-        if global_frame >= appear_frame:
-            alpha = min(1.0, (global_frame - appear_frame) / 15)
-            # Compact label
-            label_font = load_font(30, bold=True)
-            c = colors[i]
-            c_alpha = tuple(int(v * alpha) for v in c)
-
-            # Draw fruit name vertically stacked at bottom
-            col_x = 90 + i * 190
-            if i < 5:
-                draw_text_with_shadow(draw, (col_x, y_pos), name, label_font,
-                                      fill=c_alpha)
-
     # Scene title
     title_font = load_font(32)
-    draw_centered_text(draw, 1440, "- フルーツサワー 全5種 -", title_font,
+    draw_centered_text(draw, 1440, "- フルーツサワー -", title_font,
                        fill=(255, 255, 255))
 
     return img
