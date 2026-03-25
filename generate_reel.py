@@ -177,9 +177,9 @@ def render_scene1(frame_num, total_frames=90):
 def render_scene2(frame_num, total_frames=150):
     cuts = ["gp_58.JPG", "gp_59.JPG", "gp_60.JPG"]
     fruits = [
-        ["メロン", "パイン", "キウイ", "ミックスベリー", "レモン"],
-        ["メロン", "パイン", "キウイ", "ミックスベリー", "レモン"],
-        ["メロン", "パイン", "キウイ", "ミックスベリー", "レモン"],
+        ["ライム", "マンゴー", "キウイ", "ミックスベリー", "レモン"],
+        ["ライム", "マンゴー", "キウイ", "ミックスベリー", "レモン"],
+        ["ライム", "マンゴー", "キウイ", "ミックスベリー", "レモン"],
     ]
 
     cut_idx = min(frame_num // 50, 2)
@@ -210,8 +210,8 @@ def render_scene2(frame_num, total_frames=150):
     font = load_font(38, bold=True)
     small_font = load_font(26)
     colors = [
-        (144, 238, 144),  # メロン - green
-        (255, 215, 0),    # パイン - yellow
+        (50, 205, 50),    # ライム - lime green
+        (255, 165, 0),    # マンゴー - orange
         (154, 205, 50),   # キウイ - yellow-green
         (220, 60, 80),    # ミックスベリー - red
         (255, 255, 200),  # レモン - light yellow
@@ -308,8 +308,8 @@ def render_scene4(frame_num, total_frames=240):
         "gp_43.JPG",                   # 160-239
     ]
     labels = [
-        "篠峯 / ばくれん / 鳳凰美田",
-        "初しぼり 純米吟醸",
+        "",
+        "",
         "常時 8種以上ご用意",
     ]
 
