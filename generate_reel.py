@@ -208,8 +208,13 @@ def render_scene2(frame_num, total_frames=150):
 
     # Scene title
     title_font = load_font(32)
-    draw_centered_text(draw, 1440, "- フルーツサワー -", title_font,
+    draw_centered_text(draw, 1400, "- フルーツサワー -", title_font,
                        fill=(255, 255, 255))
+
+    # Fruit names
+    fruit_font = load_font(26)
+    draw_centered_text(draw, 1450, "ライム / マンゴー / キウイ / ミックスベリー / レモン", fruit_font,
+                       fill=(220, 220, 220))
 
     return img
 
